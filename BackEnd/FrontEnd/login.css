@@ -1,0 +1,112 @@
+/* General Styles */
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Nunito", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+body {
+  font-family: Arial, sans-serif;
+  background-image: linear-gradient(100deg, #ff8066, #c34a36);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+/* Login Form Container */
+.login-form {
+  background-image: linear-gradient(100deg, #9f9f9f, #989898);
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+  max-width: 300px;
+  height: 350px;
+  width: 100%;
+}
+
+/* Form Title */
+.login-form h2 {
+  text-align: center;
+  color: #c34a36;
+  margin: auto;
+}
+
+/* Form Fields */
+.login-form input[type="email"],
+.login-form input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  background-image: linear-gradient(100deg, #9f9f9f, #989898);
+  border: 1px solid #858585;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+/* Remember Me Checkbox */
+.login-form .remember-me {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.login-form .remember-me input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+/* Login Button */
+.login-form button[type="submit"] {
+  width: 100%;
+  background-color: #c34a36;
+  color: #ffffff;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  margin-top: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.login-form button[type="submit"]:hover {
+  background-color: #ff8066;
+}
+
+/* Forgot Password Link */
+.login-form .forgot-password {
+  text-align: right;
+  color: #c34a36;
+  text-decoration: none;
+  margin-bottom: 15px;
+}
+
+.login-form .forgot-password a {
+  color: #c34a36;
+  text-decoration: none;
+}
+
+.login-form .forgot-password a:hover {
+  color: #ff8066;
+}
+
+/* Sign Up Link */
+.login-form .sign-up {
+  margin-top: 10px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.login-form .sign-up a {
+  color: #c34a36;
+  text-decoration: none;
+}
+
+.login-form .sign-up a:hover {
+  color: #ff8066;
+}

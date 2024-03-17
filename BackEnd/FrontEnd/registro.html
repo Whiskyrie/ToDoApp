@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register Form</title>
+    <link rel="stylesheet" href="registro.css" />
+  </head>
+  <body>
+    <div class="register-form">
+      <h2>Registre-se</h2>
+      <form action="/registro" method="post">
+        <input type="text" name="nome" placeholder="Nome de Usuário" required />
+        <input type="email" name="email" placeholder="Email" required />
+        <input type="password" name="password" placeholder="Senha" required />
+        <input
+          type="password"
+          name="confirmpassword"
+          placeholder="Confirme sua Senha"
+          required
+        />
+        <button type="submit">Registre-se</button>
+        <div class="sign-in">
+          Já tem conta?<a href="localhost:3000/login">Faça Login</a>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

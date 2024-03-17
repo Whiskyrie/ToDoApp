@@ -1,0 +1,83 @@
+/* General Styles */
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Nunito", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+body {
+  font-family: Arial, sans-serif;
+  background-image: linear-gradient(100deg, #ff8066, #c34a36);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+/* Register Form Container */
+.register-form {
+  background-color: #ffffff;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+  max-width: 300px;
+  width: 100%;
+}
+
+/* Form Title */
+.register-form h2 {
+  text-align: center;
+  color: #6a1b9a;
+  margin: auto;
+}
+
+/* Form Fields */
+.register-form input[type="text"],
+.register-form input[type="email"],
+.register-form input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  border: 1px solid #858585;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+/* Register Button */
+.register-form button[type="submit"] {
+  width: 100%;
+  background-color: #6a1b9a;
+  color: #ffffff;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  margin-top: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.register-form button[type="submit"]:hover {
+  background-color: #4a148c;
+}
+
+/* Sign In Link */
+.register-form .sign-in {
+  margin-top: 10px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.register-form .sign-in a {
+  color: #6a1b9a;
+  text-decoration: none;
+}
+
+.register-form .sign-in a:hover {
+  text-decoration: underline;
+}
