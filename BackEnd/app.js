@@ -7,6 +7,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const path = require("path");
 const app = express();
+const authMiddleware = require('./Models/Middlewares/Auth');
 
 // Config Express
 
@@ -16,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 
 //Models
 
-const User = require("./models/User");
+const User = require("./Models/Database/User");
 
 // Open Route - Public Route
 
@@ -26,7 +27,7 @@ app.get("/", (req, res) => {
 
 // Private Route
 
-app.get("/user/:id", checkToken, async (req, res) => {
+app.get("/user/:id", authMiddleware.checkToken, async (req, res) => {
   const id = req.params.id;
 
   // Procura o usuário no banco de dados
@@ -41,31 +42,6 @@ app.get("/user/:id", checkToken, async (req, res) => {
   }
   res.status(200).json({ user });
 });
-function checkToken(req, res, next) {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
-
-  if (!token) {
-    return res.status(401).json({ message: "Acesso negado!" });
-  }
-
-  try {
-    const secret = process.env.SECRET;
-
-    jwt.verify(token, secret, (err, decoded) => {
-      if (err) {
-        return res.status(400).json({ message: "Token inválido!" });
-      }
-
-      // Se o token for válido, adicione o payload decodificado à solicitação
-      req.decoded = decoded;
-      next();
-    });
-  } catch (error) {
-    return res.status(500).json({ message: "Erro no servidor!" });
-  }
-}
-
 // Registro de Usuário
 
 app.post("/registro", async (req, res) => {
