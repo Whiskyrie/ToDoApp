@@ -8,6 +8,7 @@ const path = require("path");
 const app = express();
 const authMiddleware = require('./Middlewares/CheckToken');
 const authRegister = require('./Middlewares/AuthRegister');
+const authLogin = require('./Middlewares/AuthLogin');
 
 // Config Express
 
@@ -53,37 +54,7 @@ app.post('/registro', authRegister.registerUser);
 app.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, "./FrontEnd", "login.html"));
 });
-
-app.post("/login", async (req, res) => {
-  try {
-    const { email, password } = req.body;
-
-    // Verficar se o login existe
-
-    const user = await User.findOne({ email: email });
-
-    if (!user) {
-      return res.status(404).json({ message: "Email inválido!" });
-    }
-
-    // Verificar se a senha é válida
-
-    const passwordMatch = await bcrypt.compare(password, user.password);
-
-    if (!passwordMatch) {
-      return res.status(404).json({ message: "Senha Inválida!" });
-    }
-
-    const secret = process.env.SECRET;
-
-    const token = jwt.sign({ id: user.id }, secret);
-
-    res.status(200).redirect("/todo");
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json({ message: "Usuário não encontrado!" });
-  }
-});
+app.post('/login', authLogin.login);
 // Conexão
 
 app.post("/todo", (req, res) => {
@@ -94,8 +65,7 @@ app.get("/todo", (req, res) => {
   res.sendFile(path.join(__dirname, "./FrontEnd", "todo.html"));
 });
 
-mongosse
-  .connect(
+mongosse.connect(
     "mongodb+srv://evandroropfilho:K206wibABGTilAZm@cluster0.rvtkh7w.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
   )
   .then(() => {
