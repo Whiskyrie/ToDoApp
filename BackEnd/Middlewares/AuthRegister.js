@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const User = require('./Models/Database/User');
+const User = require('/Users/evand/OneDrive/Área de Trabalho/ToDoApp/BackEnd/Database/User');
 
 exports.registerUser = async (req, res) => {
   const { nome, email, password, confirmpassword } = req.body;

@@ -20,7 +20,7 @@ body {
 
 /* Register Form Container */
 .register-form {
-  background-color: #ffffff;
+  background-image: linear-gradient(100deg, #9f9f9f, #989898);
   padding: 20px;
   margin-top: 20px;
   border-radius: 8px;
@@ -32,7 +32,7 @@ body {
 /* Form Title */
 .register-form h2 {
   text-align: center;
-  color: #6a1b9a;
+  color: #c34a36;
   margin: auto;
 }
 
@@ -44,6 +44,7 @@ body {
   padding: 12px;
   margin-top: 15px;
   margin-bottom: 10px;
+  background-image: linear-gradient(100deg, #9f9f9f, #989898);
   border: 1px solid #858585;
   border-radius: 6px;
   box-sizing: border-box;
@@ -52,7 +53,7 @@ body {
 /* Register Button */
 .register-form button[type="submit"] {
   width: 100%;
-  background-color: #6a1b9a;
+  background-color: #c34a36;
   color: #ffffff;
   padding: 10px;
   border: none;
@@ -63,7 +64,7 @@ body {
 }
 
 .register-form button[type="submit"]:hover {
-  background-color: #4a148c;
+  background-color: #ff8066;
 }
 
 /* Sign In Link */
@@ -74,10 +75,12 @@ body {
 }
 
 .register-form .sign-in a {
-  color: #6a1b9a;
+  color: #c34a36;
   text-decoration: none;
 }
 
 .register-form .sign-in a:hover {
-  text-decoration: underline;
+  text-decoration: none;
+  color: #ff8066;
 }
+

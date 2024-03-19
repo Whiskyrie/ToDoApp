@@ -1,5 +1,4 @@
 /* Imports*/
-
 require("dotenv").config();
 const express = require("express");
 const mongosse = require("mongoose");
@@ -7,8 +6,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const path = require("path");
 const app = express();
-const authMiddleware = require('./Models/Middlewares/CheckToken');
-const authRegister = require('./Models/Middlewares/AuthRegister');
+const authMiddleware = require('./Middlewares/CheckToken');
+const authRegister = require('./Middlewares/AuthRegister');
 
 // Config Express
 
@@ -18,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 
 //Models
 
-const User = require("./Models/Database/User");
+const User = require("./Database/User");
 
 // Open Route - Public Route
 
@@ -44,7 +43,9 @@ app.get("/user/:id", authMiddleware.checkToken, async (req, res) => {
   res.status(200).json({ user });
 });
 // Registro de Usuário
-
+app.get("/registro", (req, res) => {
+  res.sendFile(path.join(__dirname, "./FrontEnd", "registro.html"));
+});
 app.post('/registro', authRegister.registerUser);
 
 
