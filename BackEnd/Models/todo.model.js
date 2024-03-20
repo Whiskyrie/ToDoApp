@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const todoSchema = new Schema({
   text: { type: String, required: true },
   completed: { type: Boolean, default: false },
-  user: { type: Schema.Types.ObjectId, ref: 'User', required: true }
+  userId: {type: String, required: true}
 });
 
 const Todo = mongoose.model('Todo', todoSchema);
