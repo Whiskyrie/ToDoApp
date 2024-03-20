@@ -5,80 +5,57 @@ const toDoBtn = document.querySelector(".todo-btn");
 const toDoList = document.querySelector(".todo-list");
 
 // Event Listeners
-
 toDoBtn.addEventListener("click", addToDo);
 toDoList.addEventListener("click", deletecheck);
 document.addEventListener("DOMContentLoaded", getTodos);
-// Check if one theme has been set previously and apply it (or std theme if not found):
-let savedTheme = localStorage.getItem("savedTheme");
-savedTheme === null
-  ? changeTheme("standard")
-  : changeTheme(localStorage.getItem("savedTheme"));
 
-// Functions;
+// Funções
 function addToDo(event) {
-  // Prevents form from submitting / Prevents form from relaoding;
   event.preventDefault();
 
-  // toDo DIV;
   const toDoDiv = document.createElement("div");
-  toDoDiv.classList.add("todo", `${savedTheme}-todo`);
+  toDoDiv.classList.add("todo");
 
-  // Create LI
   const newToDo = document.createElement("li");
   if (toDoInput.value === "") {
     alert("You must write something!");
   } else {
-    // newToDo.innerText = "hey";
     newToDo.innerText = toDoInput.value;
     newToDo.classList.add("todo-item");
     toDoDiv.appendChild(newToDo);
 
-    // Adding to local storage;
     Save(toDoInput.value);
 
-    // check btn;
     const checked = document.createElement("button");
     checked.innerHTML = '<i class="fas fa-check"></i>';
-    checked.classList.add("check-btn", `${savedTheme}-button`);
+    checked.classList.add("check-btn");
     toDoDiv.appendChild(checked);
-    // delete btn;
+
     const deleted = document.createElement("button");
     deleted.innerHTML = '<i class="fas fa-trash"></i>';
-    deleted.classList.add("delete-btn", `${savedTheme}-button`);
+    deleted.classList.add("delete-btn");
     toDoDiv.appendChild(deleted);
 
-    // Append to list;
     toDoList.appendChild(toDoDiv);
-
-    // CLearing the input;
     toDoInput.value = "";
   }
 }
 
 function deletecheck(event) {
-  // console.log(event.target);
   const item = event.target;
 
-  // delete
-  if (item.classList[0] === "delete-btn") {
-    // item.parentElement.remove();
-    // animation
+  if (item.classList.contains("delete-btn")) {
     item.parentElement.classList.add("fall");
-
     Remove(item.parentElement);
-
     item.parentElement.addEventListener("transitionend", function () {
       item.parentElement.remove();
     });
   }
 
-  // check
-  if (item.classList[0] === "check-btn") {
+  if (item.classList.contains("check-btn")) {
     item.parentElement.classList.toggle("completed");
   }
 }
-
 
 const url = "mongodb+srv://evandroropfilho:K206wibABGTilAZm@cluster0.rvtkh7w.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
@@ -97,7 +74,8 @@ async function Save(todo) {
   }
 }
 
-async function Remove(todoText) {
+async function Remove(todoElement) {
+  const todoText = todoElement.firstChild.innerText;
   const client = await MongoClient.connect(url, { useUnifiedTopology: true });
   const db = client.db("test");
   const collection = db.collection("tarefas");
@@ -113,37 +91,34 @@ async function Remove(todoText) {
 }
 
 async function getTodos() {
+  console.log('Obtendo todos do MongoDB');
   const client = await MongoClient.connect(url, { useUnifiedTopology: true });
   const db = client.db("test");
   const collection = db.collection("tarefas");
 
   try {
     const todos = await collection.find().toArray();
+    console.log('Todos obtidos:', todos);
 
     todos.forEach(function (todo) {
-      // toDo DIV;
       const toDoDiv = document.createElement("div");
-      toDoDiv.classList.add("todo", `${savedTheme}-todo`);
+      toDoDiv.classList.add("todo");
 
-      // Create LI
       const newToDo = document.createElement("li");
-
       newToDo.innerText = todo.text;
       newToDo.classList.add("todo-item");
       toDoDiv.appendChild(newToDo);
 
-      // check btn;
       const checked = document.createElement("button");
       checked.innerHTML = '<i class="fas fa-check"></i>';
-      checked.classList.add("check-btn", `${savedTheme}-button`);
+      checked.classList.add("check-btn");
       toDoDiv.appendChild(checked);
-      // delete btn;
+
       const deleted = document.createElement("button");
       deleted.innerHTML = '<i class="fas fa-trash"></i>';
-      deleted.classList.add("delete-btn", `${savedTheme}-button`);
+      deleted.classList.add("delete-btn");
       toDoDiv.appendChild(deleted);
 
-      // Append to list;
       toDoList.appendChild(toDoDiv);
     });
   } catch (err) {
@@ -152,4 +127,3 @@ async function getTodos() {
     client.close();
   }
 }
-
