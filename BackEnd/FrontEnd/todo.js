@@ -1,5 +1,5 @@
 // Selectors
-
+const MongoClient = require('mongodb').MongoClient;
 const toDoInput = document.querySelector(".todo-input");
 const toDoBtn = document.querySelector(".todo-btn");
 const toDoList = document.querySelector(".todo-list");
@@ -35,7 +35,7 @@ function addToDo(event) {
     toDoDiv.appendChild(newToDo);
 
     // Adding to local storage;
-    savelocal(toDoInput.value);
+    Save(toDoInput.value);
 
     // check btn;
     const checked = document.createElement("button");
@@ -66,8 +66,7 @@ function deletecheck(event) {
     // animation
     item.parentElement.classList.add("fall");
 
-    //removing local todos;
-    removeLocalTodos(item.parentElement);
+    Remove(item.parentElement);
 
     item.parentElement.addEventListener("transitionend", function () {
       item.parentElement.remove();
@@ -80,18 +79,37 @@ function deletecheck(event) {
   }
 }
 
-// Saving to local storage:
-function savelocal(todo) {
-  //Check: if item/s are there;
-  let todos;
-  if (localStorage.getItem("todos") === null) {
-    todos = [];
-  } else {
-    todos = JSON.parse(localStorage.getItem("todos"));
-  }
 
-  todos.push(todo);
-  localStorage.setItem("todos", JSON.stringify(todos));
+const url = "mongodb+srv://evandroropfilho:K206wibABGTilAZm@cluster0.rvtkh7w.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+
+async function Save(todo) {
+  const client = await MongoClient.connect(url, { useUnifiedTopology: true });
+  const db = client.db("test");
+  const collection = db.collection("tarefas");
+
+  try {
+    const result = await collection.insertOne({ text: todo });
+    console.log(`Um novo todo foi inserido com o ID: ${result.insertedId}`);
+  } catch (err) {
+    console.error('Erro ao inserir o todo:', err);
+  } finally {
+    client.close();
+  }
+}
+
+async function Remove(todoText) {
+  const client = await MongoClient.connect(url, { useUnifiedTopology: true });
+  const db = client.db("test");
+  const collection = db.collection("tarefas");
+
+  try {
+    const result = await collection.deleteOne({ text: todoText });
+    console.log(`${result.deletedCount} todo foi removido.`);
+  } catch (err) {
+    console.error('Erro ao remover o todo:', err);
+  } finally {
+    client.close();
+  }
 }
 
 function getTodos() {
@@ -131,50 +149,3 @@ function getTodos() {
   });
 }
 
-function removeLocalTodos(todo) {
-  //Check: if item/s are there;
-  let todos;
-  if (localStorage.getItem("todos") === null) {
-    todos = [];
-  } else {
-    todos = JSON.parse(localStorage.getItem("todos"));
-  }
-
-  const todoIndex = todos.indexOf(todo.children[0].innerText);
-  // console.log(todoIndex);
-  todos.splice(todoIndex, 1);
-  // console.log(todos);
-  localStorage.setItem("todos", JSON.stringify(todos));
-}
-
-// Change theme function:
-function changeTheme(color) {
-  localStorage.setItem("savedTheme", color);
-  savedTheme = localStorage.getItem("savedTheme");
-
-  document.body.className = color;
-  // Change blinking cursor for darker theme:
-  color === "darker"
-    ? document.getElementById("title").classList.add("darker-title")
-    : document.getElementById("title").classList.remove("darker-title");
-
-  document.querySelector("input").className = `${color}-input`;
-  // Change todo color without changing their status (completed or not):
-  document.querySelectorAll(".todo").forEach((todo) => {
-    Array.from(todo.classList).some((item) => item === "completed")
-      ? (todo.className = `todo ${color}-todo completed`)
-      : (todo.className = `todo ${color}-todo`);
-  });
-  // Change buttons color according to their type (todo, check or delete):
-  document.querySelectorAll("button").forEach((button) => {
-    Array.from(button.classList).some((item) => {
-      if (item === "check-btn") {
-        button.className = `check-btn ${color}-button`;
-      } else if (item === "delete-btn") {
-        button.className = `delete-btn ${color}-button`;
-      } else if (item === "todo-btn") {
-        button.className = `todo-btn ${color}-button`;
-      }
-    });
-  });
-}
