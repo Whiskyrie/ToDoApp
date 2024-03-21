@@ -128,7 +128,24 @@ form button {
   /* To remove the bullets of unordered list */
   list-style: none;
 }
+.todo-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #cacaca;
+  color: white;
+  text-decoration: none;
+  border-radius: 0 17px 17px 0;
 
+}
+
+.todo-btn:hover {
+  background: #969696;
+  transition: 0.5s linear;
+}
+.todo-btn img {
+  width: 20px;
+  height: 20px;
+}
 .todo {
   margin: 1rem;
   /* background: rgb(247, 226, 223); */
